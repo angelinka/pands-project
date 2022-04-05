@@ -2,9 +2,35 @@
 
 # Author: Angelina Belotserkovskaya
 
+# Importing python script with functions to be able to call them from here
+import functions as f
+
+# main method which calls corresponding functions depending on user selection
 def main():
     displayMenu()
 
+    while True:
+        choice = input('Choice: ').strip()
+
+        if choice == '1':
+            print ('\n')
+            
+            try:
+                f.about()
+                displayMenu()
+            except Exception as e:
+                print('An exceptioin occured', e)
+
+        elif choice == '2':
+            try:
+                f.overview()
+                displayMenu()
+            except Exception as e:
+                print('An exceptioin occured', e)
+        elif choice == 'x':
+            break
+        else:
+            displayMenu()
 
 def displayMenu():  #displaying options of the main menu
     print ('\n')
