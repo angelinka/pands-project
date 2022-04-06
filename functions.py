@@ -33,11 +33,19 @@ def overview():
         )
     print(text)
     species_type =df['class'].unique()
-    print("\nThe following are the three class or species types of iris in the data set \n",*species_type, sep = " ")
-    print("\nThe number of null or missing values in the iris dataframe for each column: \n", df.isnull().sum())
+    print("\nThe following are the three class or species types of iris in the data set\n",*species_type, sep = " ")
+    print("\nThe number of null or missing values in the iris dataframe for each column:\n", df.isnull().sum())
     print(f"\nThe number of non-NA cells for each column or row are: \n{df.count()}")
     print(f"\nA concise summary of the iris DataFrame: \n")
     df.info()
 
 
-    
+def summary():
+    pd.set_option('display.precision', 2)
+    all_summ = df.describe()
+    sumSetosa = df[df['class'] == 'Iris-setosa'].describe()
+    sumVersicolor = df[df['class'] == 'Iris-versicolor'].describe()
+    sumVirginica = df[df['class'] == 'Iris-virginica'].describe()
+    combined = ('\nThe following is summary of all data set \n'+ str(all_summ) + "\n\n" + '\nSummary of Setosa class:\n\n' + str(sumSetosa) +\
+    '\n\nSummary of Versicolor class:\n\n' + str(sumVersicolor) +  '\n\nSummary of Virginica class:\n\n' + str(sumVirginica) )
+    return combined

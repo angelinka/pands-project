@@ -8,29 +8,55 @@ import functions as f
 # main method which calls corresponding functions depending on user selection
 def main():
     displayMenu()
-
-    while True:
-        choice = input('Choice: ').strip()
-
-        if choice == '1':
-            print ('\n')
-            
+    
+    choice = input('Choice: ').strip()
+    if choice == '1':
+        print ('\n')
+        
+        try:
+            f.about()
+            exit()
+        except Exception as e:
+            print('An exceptioin occured', e)
+    elif choice == '2':
+        try:
+            f.overview()
+            exit()
+        except Exception as e:
+            print('An exceptioin occured', e)
+    elif choice == '3':
+        usr_inp = input('Would you like to save summary to the file (s) or print to console (p)? s/p: ')
+        if usr_inp == 's':
             try:
-                f.about()
-                displayMenu()
+                saveToFile()
+                exit()
             except Exception as e:
                 print('An exceptioin occured', e)
-
-        elif choice == '2':
-            try:
-                f.overview()
-                displayMenu()
-            except Exception as e:
-                print('An exceptioin occured', e)
-        elif choice == 'x':
-            break
+        elif usr_inp == 'p':
+            print(f.summary())
+            exit()
         else:
-            displayMenu()
+            print('Incorrect selection')
+            exit()
+    elif choice == 'x':
+        print('Bye!')
+    else:
+        displayMenu()
+
+def saveToFile():
+    with open('data/summary.txt', 'w') as t:
+        t.write(str(f.summary()))
+    print('\nFile summary.txt is successfully saved')
+
+def exit():
+    answer = input('\nWould you like to explore  more? y/n: ')
+    if answer == 'y':
+        main()
+    elif answer == 'n':
+        print("Thank you for using the app! Bye :)")
+    else:
+        print("Can you try again? Please select y/n")
+        exit()
 
 def displayMenu():  #displaying options of the main menu
     print ('\n')
