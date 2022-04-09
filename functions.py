@@ -11,6 +11,11 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+sns.set_style("darkgrid")
+sns.set(rc={'figure.figsize':(8,6)})
+# we can choose different color pallets, example https://seaborn.pydata.org/tutorial/color_palettes.html
+sns.color_palette("bright")
+
 # reads in the dataset from file
 iris = 'data/iris.data'
 df = pd.read_csv(iris, sep=',', names=["sepal_length", "sepal_width", "petal_length", "petal_width", "class"])
@@ -56,6 +61,7 @@ def examples():
     print(f'\n\tFirst 10 elements of the dataset:\n {df.head(10)}' + \
         f'\n\n\tLast 10 elements of the dataset:\n {df.tail(10)}')
 
+# this function either displays or saves histogram into the file. User can choose between matplotlib or seaborn (more detailed) histogram.
 def hist():
     usr_inp = input('For matplotlib histograms choose (1), for seaborn (colour encoded) (2)? ')
     if usr_inp == '1':
@@ -84,10 +90,16 @@ def hist():
     elif usr_inp == '2':
         fig, axs = plt.subplots(2,2)
         fig.set_size_inches(12, 9)
-        sns.histplot(data=df, x='sepal_length', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[0,0]).tick_params(axis='both', which='major', labelsize=10)
-        sns.histplot(data=df, x='sepal_width', binwidth=0.2, hue='class', kde=True, alpha=0.5,  ax=axs[0,1]).tick_params(axis='both', which='major', labelsize=5)
-        sns.histplot(data=df, x='petal_length', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[1,0]).tick_params(axis='both', which='major', labelsize=5)
-        sns.histplot(data=df, x='petal_width', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[1,1]).tick_params(axis='both', which='major', labelsize=5)
+        sns.histplot(data=df, x='sepal_length', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[0,0]).tick_params(axis='both',
+         which='major', labelsize=10)
+        sns.histplot(data=df, x='sepal_width', binwidth=0.2, hue='class', kde=True, alpha=0.5,  ax=axs[0,1]).tick_params(axis='both',
+         which='major', labelsize=10)
+        sns.histplot(data=df, x='petal_length', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[1,0]).tick_params(axis='both',
+         which='major', labelsize=10)
+        sns.histplot(data=df, x='petal_width', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[1,1]).tick_params(axis='both',
+         which='major', labelsize=10)
+        plt.suptitle('Histograms (distribution frequency per variable)', fontsize=13, fontname='fantasy')
+        plt.tight_layout()
         inp = input('Would you like to view the plot (1) or to save to file (2): ')
         if inp == '1':
             plt.show()
@@ -97,3 +109,40 @@ def hist():
         else:
             print("Invalid selection!")
             hist()
+
+# this function displays scatter plot for sepal length v width
+def scatter():
+    usr_inp = input('For sepal scatterplot  choose (1), for petal scatterplot (2)? ')
+    if usr_inp == '1':
+        sns.scatterplot(x='sepal_length', y='sepal_width',
+                    hue='class', data=df, edgecolor='black', palette="bright")
+        plt.tick_params(axis='both', which='major', labelsize=10)
+        plt.xlabel("sepal_length (cm)", fontsize=15)
+        plt.ylabel("sepal_width (cm)", fontsize=15)
+        plt.suptitle('Scatterplot - sepal length v width', fontsize=20, color='#7F069C')
+
+        inp = input('Would you like to view the plot (1) or to save to file (2): ')
+        if inp == '1':
+            plt.show()
+        elif inp == '2':
+            plt.savefig('Images/scatterSep.png')
+            print('Successfully saved to scatterSep.png!')
+        else:
+            print("Invalid selection!")
+            scatter()
+    elif usr_inp == '2':
+        sns.scatterplot(x='petal_length', y='petal_width',
+                hue='class', data=df, edgecolor='black', palette="bright")
+        plt.tick_params(axis='both', which='major', labelsize=10)
+        plt.xlabel("petal_length (cm)", fontsize=15)
+        plt.ylabel("petal_width (cm)", fontsize=15)
+        plt.suptitle('Scatterplot - petal length v width', fontsize=20, color='#7F069C')
+        inp = input('Would you like to view the plot (1) or to save to file (2): ')
+        if inp == '1':
+            plt.show()
+        elif inp == '2':
+            plt.savefig('Images/scatterPet.png')
+            print('Successfully saved to scatterPet.png!')
+        else:
+            print("Invalid selection!")
+            scatter()

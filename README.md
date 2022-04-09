@@ -16,5 +16,5 @@ There are two main files in this repository:
     - Saves a histogram of each variable to png files, and
     - Outputs a scatter plot of each pair of variables.
     - Performs additional analysis of the data
-3. data folder contains iris.data (original data set) and text files (which are saved when running the code as explained above)
-4. Images folder contains images used in jupyter notebook and histograms (which are saved when running the code as explained above)
+3. **data** folder contains iris.data (original data set) and text files (which are saved when running the code as explained above)
+4. **Images** folder contains images used in jupyter notebook and histograms (which are saved when running the code as explained above)

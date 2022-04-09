@@ -54,6 +54,12 @@ def main():
                 exit()
             except Exception as e:
                     print('An exceptioin occured', e)
+        if usr_inp == '2':
+            try:
+                f.scatter()
+                exit()
+            except Exception as e:
+                    print('An exceptioin occured', e)
     elif choice == 'x':
         print('Bye!')
     else:
@@ -87,9 +93,7 @@ def displayMenu():  #displaying options of the main menu
     print('3 - Statistical Summary overview by class')
     print('4 - View first and last 10 elements of dataset')
     print('5 - Plots')
-    print('6 - Scatterplots')
-    print('7 - Boxplots')
-    print('8 - Violinplots')
+    print('6 - ')
     print('x - Exit application')
 
 if __name__ == "__main__":
