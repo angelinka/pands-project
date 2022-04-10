@@ -146,3 +146,41 @@ def scatter():
         else:
             print("Invalid selection!")
             scatter()
+# this function displays a pairplot https://seaborn.pydata.org/generated/seaborn.pairplot.html?highlight=pairplot#seaborn.pairplot
+def pairPlt():
+    sns.pairplot(data=df, hue='class', palette="colorblind", markers=["o", "s", "D"])
+    plt.subplots_adjust(top=.95) # creates space above the plot for the title 
+    plt.tick_params(axis='both', which='major', labelsize=5) # formats ticks
+    # sets title with formatting
+    plt.suptitle('Pairplot (scatterplots and marginal distribution of the data)', fontsize=15, color='#7F069C')
+    x = input("Enter (1) to view the pairplot or (2) to save to file? ")
+    if x == '1':
+        plt.show()
+    elif x == '2':
+        plt.savefig('Images/pairplot.png')
+        print('Successfully saved to pairplot.png!')
+    else:
+        print("Invalid selection!")
+        pairPlt()
+
+# this function creates pairgrid with KDE 
+def pairgrid():
+    pg = sns.PairGrid(df, hue = 'class', palette='colorblind')
+    pg.map_upper(sns.kdeplot, shade=True, alpha=0.5) # creates KDE with shade above the diagonal. # aplha=0.5 so we can see through
+    pg.map_lower(sns.kdeplot, alpha=0.5) # creates KDE without shade below the diagonal.
+    pg.map_diag(sns.histplot, multiple="stack", element="step") # stacked histogram on the diagonal
+    plt.subplots_adjust(top=.95) # creates space above the plot for the title
+    plt.tick_params(axis='both', which='major', labelsize=5) # sets ticks
+    # sets title and formatting
+    plt.suptitle('Pair Grid (KDE scatterplots and histograms)', fontsize=15, color='#7F069C')
+    pg.add_legend(bbox_to_anchor=(1, 0.5)) # defines legend location
+    #plt.tight_layout()
+    x = input("Enter (1) to view the pairgrid or (2) to save to file? ")
+    if x == '1':
+        plt.show()
+    elif x == '2':
+        plt.savefig('Images/pairgrid.png')
+        print('Successfully saved to pairplot.png!')
+    else:
+        print("Invalid selection!")
+        pairgrid()

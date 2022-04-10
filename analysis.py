@@ -46,20 +46,35 @@ def main():
     elif choice == '5':
         print('Please select the type of plot you would like to see:\n' \
             '1 - Histograms\n' \
-            '2 - Scatterplots\n')
+            '2 - Scatterplots\n' \
+            '3 - Pairplot\n' \
+            '4 - KDE pairgrid'   
+                )
         usr_inp = input("Choice: ")
         if usr_inp == '1':
             try:
                 f.hist()
                 exit()
             except Exception as e:
-                    print('An exceptioin occured', e)
-        if usr_inp == '2':
+                print('An exceptioin occured', e)
+        elif usr_inp == '2':
             try:
                 f.scatter()
                 exit()
             except Exception as e:
-                    print('An exceptioin occured', e)
+                print('An exceptioin occured', e)
+        elif usr_inp == '3':
+            try:
+                f.pairPlt()
+                exit()
+            except Exception as e:
+                print('An exceptioin occured', e)
+        elif usr_inp == '4':
+            try:
+                f.pairgrid()
+                exit()
+            except Exception as e:
+                print('An exceptioin occured', e)
     elif choice == 'x':
         print('Bye!')
     else:
