@@ -61,6 +61,17 @@ def examples():
     print(f'\n\tFirst 10 elements of the dataset:\n {df.head(10)}' + \
         f'\n\n\tLast 10 elements of the dataset:\n {df.tail(10)}')
 
+# this function is called everytime the user interacts with plots as it offers to view or save the plot
+def saveOrView(file, func):
+    inp = input('Enter (1) to view the plot or (2) to save to file? ')
+    if inp == '1':
+        plt.show()
+    elif inp == '2':
+        plt.savefig('Images/'+file + '.png')
+        print('Successfully saved to '+ file+ '.png!')
+    else:
+        print("Invalid selection!")
+        func()
 # this function either displays or saves histogram into the file. User can choose between matplotlib or seaborn (more detailed) histogram.
 def hist():
     usr_inp = input('For matplotlib histograms choose (1), for seaborn (colour encoded) (2)? ')
@@ -71,22 +82,16 @@ def hist():
         axes[0,0].hist(df['sepal_length'], bins=7)
 
         axes[0,1].set_title("Sepal Width")
-        axes[0,1].hist(df['sepal_width'], bins=5);
+        axes[0,1].hist(df['sepal_width'], bins=5)
 
         axes[1,0].set_title("Petal Length")
-        axes[1,0].hist(df['petal_length'], bins=6);
+        axes[1,0].hist(df['petal_length'], bins=6)
 
         axes[1,1].set_title("Petal Width")
-        axes[1,1].hist(df['petal_width'], bins=6);
-        inp = input('Would you like to view the plot (1) or to save to file (2): ')
-        if inp == '1':
-            plt.show()
-        elif inp == '2':
-            plt.savefig('Images/matplHist.png')
-            print('Successfully saved to matplHist.png!')
-        else:
-            print("Invalid selection!")
-            hist()
+        axes[1,1].hist(df['petal_width'], bins=6)
+        fig.suptitle('Histograms with matplotlib (distribution frequency per variable)', fontsize=15, color='#7F069C')
+        saveOrView('matplHist', hist)
+        
     elif usr_inp == '2':
         fig, axs = plt.subplots(2,2)
         fig.set_size_inches(12, 9)
@@ -98,17 +103,10 @@ def hist():
          which='major', labelsize=10)
         sns.histplot(data=df, x='petal_width', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[1,1]).tick_params(axis='both',
          which='major', labelsize=10)
-        plt.suptitle('Histograms (distribution frequency per variable)', fontsize=13, fontname='fantasy')
+        plt.suptitle('Histograms & Probability Density Function (PDF)', fontsize=15, color='#7F069C')
         plt.tight_layout()
-        inp = input('Would you like to view the plot (1) or to save to file (2): ')
-        if inp == '1':
-            plt.show()
-        elif inp == '2':
-            plt.savefig('Images/seabHist.png')
-            print('Successfully saved to seabHist.png!')
-        else:
-            print("Invalid selection!")
-            hist()
+        saveOrView('seabHist', hist)
+        
 
 # this function displays scatter plot for sepal length v width
 def scatter():
@@ -120,16 +118,7 @@ def scatter():
         plt.xlabel("sepal_length (cm)", fontsize=15)
         plt.ylabel("sepal_width (cm)", fontsize=15)
         plt.suptitle('Scatterplot - sepal length v width', fontsize=20, color='#7F069C')
-
-        inp = input('Would you like to view the plot (1) or to save to file (2): ')
-        if inp == '1':
-            plt.show()
-        elif inp == '2':
-            plt.savefig('Images/scatterSep.png')
-            print('Successfully saved to scatterSep.png!')
-        else:
-            print("Invalid selection!")
-            scatter()
+        saveOrView('scatterSep', scatter)       
     elif usr_inp == '2':
         sns.scatterplot(x='petal_length', y='petal_width',
                 hue='class', data=df, edgecolor='black', palette="bright")
@@ -137,15 +126,8 @@ def scatter():
         plt.xlabel("petal_length (cm)", fontsize=15)
         plt.ylabel("petal_width (cm)", fontsize=15)
         plt.suptitle('Scatterplot - petal length v width', fontsize=20, color='#7F069C')
-        inp = input('Would you like to view the plot (1) or to save to file (2): ')
-        if inp == '1':
-            plt.show()
-        elif inp == '2':
-            plt.savefig('Images/scatterPet.png')
-            print('Successfully saved to scatterPet.png!')
-        else:
-            print("Invalid selection!")
-            scatter()
+        saveOrView('scatterPet', scatter)
+        
 # this function displays a pairplot https://seaborn.pydata.org/generated/seaborn.pairplot.html?highlight=pairplot#seaborn.pairplot
 def pairPlt():
     sns.pairplot(data=df, hue='class', palette="colorblind", markers=["o", "s", "D"])
@@ -153,15 +135,8 @@ def pairPlt():
     plt.tick_params(axis='both', which='major', labelsize=5) # formats ticks
     # sets title with formatting
     plt.suptitle('Pairplot (scatterplots and marginal distribution of the data)', fontsize=15, color='#7F069C')
-    x = input("Enter (1) to view the pairplot or (2) to save to file? ")
-    if x == '1':
-        plt.show()
-    elif x == '2':
-        plt.savefig('Images/pairplot.png')
-        print('Successfully saved to pairplot.png!')
-    else:
-        print("Invalid selection!")
-        pairPlt()
+    saveOrView('pairplot', pairPlt)
+    
 
 # this function creates pairgrid with KDE 
 def pairgrid():
@@ -174,13 +149,11 @@ def pairgrid():
     # sets title and formatting
     plt.suptitle('Pair Grid (KDE scatterplots and histograms)', fontsize=15, color='#7F069C')
     pg.add_legend(bbox_to_anchor=(1, 0.5)) # defines legend location
-    #plt.tight_layout()
-    x = input("Enter (1) to view the pairgrid or (2) to save to file? ")
-    if x == '1':
-        plt.show()
-    elif x == '2':
-        plt.savefig('Images/pairgrid.png')
-        print('Successfully saved to pairplot.png!')
-    else:
-        print("Invalid selection!")
-        pairgrid()
+    saveOrView('pairgrid', pairgrid)
+    
+def heatMap():
+    plt.figure(figsize=(10,11))
+    sns.heatmap(df.corr(), annot=True)
+    plt.suptitle('Correlation Heatmap', fontsize=15, color='#7F069C')
+    saveOrView('heatmap', heatMap)
+    

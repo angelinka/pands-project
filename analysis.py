@@ -48,7 +48,8 @@ def main():
             '1 - Histograms\n' \
             '2 - Scatterplots\n' \
             '3 - Pairplot\n' \
-            '4 - KDE pairgrid'   
+            '4 - KDE pairgrid\n' \
+            '5 - Heatmap\n'  
                 )
         usr_inp = input("Choice: ")
         if usr_inp == '1':
@@ -72,6 +73,12 @@ def main():
         elif usr_inp == '4':
             try:
                 f.pairgrid()
+                exit()
+            except Exception as e:
+                print('An exceptioin occured', e)
+        elif usr_inp == '5':
+            try:
+                f.heatMap()
                 exit()
             except Exception as e:
                 print('An exceptioin occured', e)
