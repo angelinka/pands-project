@@ -49,7 +49,9 @@ def main():
             '2 - Scatterplots\n' \
             '3 - Pairplot\n' \
             '4 - KDE pairgrid\n' \
-            '5 - Heatmap\n'  
+            '5 - Heatmap\n' \
+            '6 - Boxplot\n' \
+            '7 - Violin plot'
                 )
         usr_inp = input("Choice: ")
         if usr_inp == '1':
@@ -82,6 +84,24 @@ def main():
                 exit()
             except Exception as e:
                 print('An exceptioin occured', e)
+        elif usr_inp == '6':
+            try:
+                f.boxplt()
+                exit()
+            except Exception as e:
+                print('An exceptioin occured', e)
+        elif usr_inp == '7':
+            try:
+                f.violin()
+                exit()
+            except Exception as e:
+                print('An exceptioin occured', e)
+    elif choice == '6':
+        try:
+            f.corr()
+            exit()
+        except Exception as e:
+            print('An exceptioin occured', e)
     elif choice == 'x':
         print('Bye!')
     else:
@@ -115,7 +135,7 @@ def displayMenu():  #displaying options of the main menu
     print('3 - Statistical Summary overview by class')
     print('4 - View first and last 10 elements of dataset')
     print('5 - Plots')
-    print('6 - ')
+    print('6 - Correlation table')
     print('x - Exit application')
 
 if __name__ == "__main__":

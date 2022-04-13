@@ -26,7 +26,7 @@ def about():
     print("'This is perhaps the best known database to be found in the pattern recognition literature. Fisher’s paper is " \
     "a classic in the field and is referenced frequently to this day.' - UCI Machine Learning Repository \n \n" \
     "This is a data set also known as Iris flower data set which was published by British statistician and biologist Ronald Fisher in 1936." \
-    "The data set consists of 150 records (50 for each of the three Iris species: Iris setosa, Iris versicolor and Iris virginica). Each species" \
+    "The data set consists of 150 records (50 for each of the three Iris class: Iris setosa, Iris versicolor and Iris virginica). Each class" \
     "in turn have four attributes which were measured: the length and the width of the sepals and petals in centimeters. "
         )
     print('https://en.wikipedia.org/wiki/Iris_flower_data_set')
@@ -39,7 +39,7 @@ def overview():
         )
     print(text)
     species_type =df['class'].unique()
-    print("\nThe following are the three class or species types of iris in the data set\n",*species_type, sep = " ")
+    print("\nThe following are the three class or class types of iris in the data set\n",*species_type, sep = " ")
     print("\nThe number of null or missing values in the iris dataframe for each column:\n", df.isnull().sum())
     print(f"\nThe number of non-NA cells for each column or row are: \n{df.count()}")
     print(f"\nA concise summary of the iris DataFrame: \n")
@@ -156,4 +156,52 @@ def heatMap():
     sns.heatmap(df.corr(), annot=True)
     plt.suptitle('Correlation Heatmap', fontsize=15, color='#7F069C')
     saveOrView('heatmap', heatMap)
+
+# this function creates boxplot grid by each each class
+def boxplt():
+    f, axes = plt.subplots(2,2) # this produces a 2x2 grid of boxplots
+    # there are4 boxplots. axes[0,0] refers to position on grid [row, column]
+    # linesize, outlier marker size (fliersize), and colour palette defined
+    sns.boxplot(x = 'class', y='sepal_length', data = df, ax=axes[0,0], linewidth=0.5, palette='colorblind')
+    sns.boxplot(x = 'class', y='sepal_width', data = df, ax=axes[0,1], linewidth=0.5, palette='colorblind')
+    sns.boxplot(x = 'class', y='petal_length', data = df, ax=axes[1,0], linewidth=0.5, palette='colorblind')
+    sns.boxplot(x = 'class', y='petal_width', data = df, ax=axes[1,1], linewidth=0.5, palette='colorblind')
+    # setting x and y labels. Empty string on x axes as names of the flower classes are already specified and it will only 
+    #create more clutter
+    axes[0,0].set_xlabel(" ")
+    axes[0,0].set_ylabel("Sepal length (cm)", fontsize=10)
+    axes[0,1].set_xlabel(" ")
+    axes[0,1].set_ylabel("Sepal width (cm)", fontsize=10 )
+    axes[1,0].set_xlabel(" ")
+    axes[1,0].set_ylabel("Petal length (cm)", fontsize=10)
+    axes[1,1].set_xlabel(" ")
+    axes[1,1].set_ylabel("Petal width (cm)", fontsize=10)
+    # title and formatting
+    f.suptitle('Boxplots by classes', fontsize=15, color='#7F069C')
+    saveOrView('boxplt', boxplt)
+
+def violin():
+    fig, axes = plt.subplots(2, 2, figsize=(12,8))
+    sns.violinplot(x = 'class', y='sepal_length', data = df, ax=axes[0,0], palette='colorblind', inner='quartile')
+    sns.violinplot(x = 'class', y='sepal_width', data = df, ax=axes[0,1], palette='colorblind', inner='quartile')
+    sns.violinplot(x = 'class', y='petal_length', data = df, ax=axes[1,0], palette='colorblind', inner='quartile')
+    sns.violinplot(x = 'class', y='petal_width', data = df, ax=axes[1,1], palette='colorblind', inner='quartile')
+    # setting x and y labels. Empty string on x axes as names of the flower classes are already specified and it will only 
+    #create more clutter
+    axes[0,0].set_xlabel(" ")
+    axes[0,0].set_ylabel("Sepal length (cm)", fontsize=10)
+    axes[0,1].set_xlabel(" ")
+    axes[0,1].set_ylabel("Sepal width (cm)", fontsize=10 )
+    axes[1,0].set_xlabel(" ")
+    axes[1,0].set_ylabel("Petal length (cm)", fontsize=10)
+    axes[1,1].set_xlabel(" ")
+    axes[1,1].set_ylabel("Petal width (cm)", fontsize=10)
+    # title and formatting
+    fig.suptitle('Violin plot by classes', fontsize=15, color='#7F069C')
+    saveOrView('violin', violin)
     
+def corr():
+    print("\t\tCorrelation between pairs of variables for the Iris dataset \n")
+    print(df.corr())
+    print("\n\n\t\tCorrelation between pairs of variables for the Iris dataset by flower type \n")
+    print(df.groupby("class").corr())
