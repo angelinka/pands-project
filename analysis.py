@@ -96,6 +96,9 @@ def main():
                 exit()
             except Exception as e:
                 print('An exceptioin occured', e)
+        else:
+            print('Selection not recognised, returning to main menu')
+            main()
     elif choice == '6':
         try:
             f.corr()
@@ -105,7 +108,7 @@ def main():
     elif choice == 'x':
         print('Bye!')
     else:
-        displayMenu()
+        main()
 
 # this function is saving the output from summary() function into text file
 def saveToFile():
