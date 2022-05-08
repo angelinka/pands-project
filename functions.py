@@ -80,8 +80,8 @@ def hist():
     if usr_inp == '1':
         fig, axes = plt.subplots(2, 2, figsize=(10,10)) # this produces a 2x2 grid of plots
         # specifiyng params of the plots and it's location on the grid
-        axes[0,0].set_title("Sepal Length")
-        axes[0,0].hist(df['sepal_length'], bins=7)
+        axes[0,0].set_title("Sepal Length") # adding title
+        axes[0,0].hist(df['sepal_length'], bins=7) # choosing the number of equal-width bins/buckets, which is 10 by default 
         axes[0,1].set_title("Sepal Width")
         axes[0,1].hist(df['sepal_width'], bins=5)
         axes[1,0].set_title("Petal Length")
@@ -104,7 +104,7 @@ def hist():
          which='major', labelsize=10)
         sns.histplot(data=df, x='petal_width', binwidth=0.2, hue='class', kde=True, alpha=0.5, ax=axs[1,1]).tick_params(axis='both',
          which='major', labelsize=10)
-        plt.suptitle('Histograms & Probability Density Function (PDF)', fontsize=15, color='#7F069C')
+        plt.suptitle('Histograms & Kernel Density Estimate (KDE)', fontsize=15, color='#7F069C')
         saveOrView('seabHist', hist)
         
 
